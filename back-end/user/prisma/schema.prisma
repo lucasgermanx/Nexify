@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model accountactivationtoken {
+  id             Int      @id @default(autoincrement())
+  user_reference String
+  email          String
+  token          String   @unique(map: "AccountActivationToken_token_key")
+  token_used     Boolean  @default(false)
+  tokens_old     String?
+  resent         Boolean  @default(false)
+  times_resent   Int      @default(0)
+  token_expired  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  users          users    @relation(fields: [user_reference], references: [user_reference], map: "AccountActivationToken_user_reference_fkey")
+
+  @@index([user_reference], map: "AccountActivationToken_user_reference_fkey")
+}
+
+model recovertokens {
+  id             Int      @id @default(autoincrement())
+  user_reference String
+  email          String
+  token          String   @unique(map: "RecoverTokens_token_key")
+  token_used     Boolean  @default(false)
+  tokens_old     String?
+  resent         Boolean  @default(false)
+  times_resent   Int      @default(0)
+  token_expired  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  users          users    @relation(fields: [user_reference], references: [user_reference], map: "RecoverTokens_user_reference_fkey")
+
+  @@index([user_reference], map: "RecoverTokens_user_reference_fkey")
+}
+
+model users {
+  id                     Int                      @id @default(autoincrement())
+  customer_id            String                   @unique(map: "Users_customer_id_key")
+  user_reference         String                   @unique(map: "Users_user_reference_key")
+  name                   String
+  email                  String                   @unique(map: "Users_email_key")
+  cpf                    String                   @unique(map: "Users_cpf_key")
+  password               String
+  phone                  String?
+  avatar                 String?
+  user_discord           String                   @unique(map: "Users_user_discord_key")
+  status                 users_status             @default(pending)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime
+  accountactivationtoken accountactivationtoken[]
+  recovertokens          recovertokens[]
+}
+
+enum users_status {
+  pending
+  active
+  blocked
+  banned
+  suspense
+}

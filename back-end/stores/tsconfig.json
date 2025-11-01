@@ -1,0 +1,21 @@
+{
+    "ts-node": {
+      "require": ["tsconfig-paths/register"]
+    },
+    "compilerOptions": {
+      "forceConsistentCasingInFileNames": false,
+      "target": "ES6",
+      "module": "commonjs",
+      "outDir": "dist",
+      "rootDir": "src",
+      "strict": true,
+      "esModuleInterop": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"],
+        "@setup": ["src/Setup/*"]
+      },
+      "noImplicitAny": false
+    },
+  }
+  

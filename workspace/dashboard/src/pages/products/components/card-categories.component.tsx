@@ -1,0 +1,164 @@
+import {
+  Badge,
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  DropdownButton,
+  Modal,
+  Row,
+} from "react-bootstrap";
+
+import { ButtonGreen } from "@/assets/Style/GlobalStyle";
+import { useCategory } from "@/core/client/providers/categories/categories.provider";
+import { NotFoundList } from "@/global/components/NotFound-List";
+import { useState } from "react";
+import { MdMoreVert } from "react-icons/md";
+import styled from "styled-components";
+import { CategoriesModalUpdateHandler } from "../actions/CategoriesHandler";
+import { ModalCategoriesUpdate } from "./ModalCategoriesUpdate";
+import { ProductCardComponent } from "./card-product.component";
+import { ModalProductCreate } from "./modal-product-create.component";
+
+const StyledCard = styled(Card)`
+  border: 0;
+`;
+
+const StyledHeader = styled(Card.Header)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #dee1ef;
+  border: 0;
+`;
+
+const StyledContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledTitle = styled.h6`
+  margin-top: 0.75rem;
+  margin-right: 10px;
+`;
+
+const StyledBadgeContainer = styled.div`
+  display: flex;
+  margin-left: 10px;
+`;
+
+const StyledBadge = styled(Badge)`
+  margin-right: 10px;
+  background-color: #c4c4c4 !important;
+  color: black;
+`;
+
+const StyledSlugBadge = styled(Badge)`
+  background-color: #95edb5 !important;
+  color: black;
+`;
+
+const TransparentDropdownButton = styled(DropdownButton)`
+  &&& .dropdown-toggle {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: black;
+    font-size: 18px;
+  }
+  float: right;
+  padding-left: 10px;
+  padding-top: 4px;
+`;
+
+const CategoryCard = ({ category }: any) => {
+  const {showModalUpdateCategories,handleCloseModalUpdateCategories,handleShowModalUpdateCategories} = CategoriesModalUpdateHandler();
+  const { ProviderDeleteCategory } = useCategory();
+  const [show, setShow] = useState(false);
+  const [showModalProductCreate, setShowModalProductCreate] = useState(false);
+  
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
+  const handleModalProductCreateOpen = () => {
+    setShowModalProductCreate(true);
+  };
+
+  const handleModalProductCreateClose = () => {
+    setShowModalProductCreate(false);
+  };
+
+  return (
+    <>
+      <StyledCard>
+        <StyledHeader>
+          <StyledContent>
+            <StyledTitle className="mt-2">{category?.category}</StyledTitle>
+            <StyledBadgeContainer>
+              <StyledBadge>ID:{category?.id}</StyledBadge>
+              <StyledSlugBadge>SLUG: {category?.category_slug}</StyledSlugBadge>
+            </StyledBadgeContainer>
+          </StyledContent>
+          <div>
+            <ButtonGreen onClick={handleModalProductCreateOpen}>Novo produto</ButtonGreen>
+            <TransparentDropdownButton title={<MdMoreVert />}>
+              <Dropdown.Item onClick={handleShowModalUpdateCategories}>
+                Editar
+              </Dropdown.Item>
+              <Dropdown.Item onClick={handleShow}>Excluir</Dropdown.Item>
+            </TransparentDropdownButton>
+          </div>
+        </StyledHeader>
+        <Card.Body>
+          <Row className="mt-3">
+            {category?.products && category?.products.length > 0 ? (
+              category?.products.map((item: any) => (
+                <Col md={3} key={item.id}>
+                  <ProductCardComponent category={category} product={item} />
+                </Col>
+              ))
+            ) : (
+              <NotFoundList title="Nenhum produto encontrado."></NotFoundList>
+            )}
+          </Row>
+        </Card.Body>
+      </StyledCard>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body>
+          <p className="text-center text-danger">
+            Ao excluir a categoria, todos os produtos vinculados a ela serão
+            permanentemente removidos.
+          </p>
+          <Button
+            className="w-100"
+            variant="danger"
+            style={{ borderRadius: "40px" }}
+            onClick={() => {
+              ProviderDeleteCategory(category?.category_reference);
+              handleClose();
+            }}
+          >
+            Deletar categoria
+          </Button>
+        </Modal.Body>
+      </Modal>
+
+      <ModalProductCreate
+        showModal={showModalProductCreate}
+        handleModalClose={handleModalProductCreateClose}
+        category={category}
+      />
+      {showModalUpdateCategories && (
+        <ModalCategoriesUpdate
+          category={category}
+          showModal={showModalUpdateCategories}
+          handleModalClose={handleCloseModalUpdateCategories}
+        />
+      )}
+    </>
+  );
+};
+
+export default CategoryCard;

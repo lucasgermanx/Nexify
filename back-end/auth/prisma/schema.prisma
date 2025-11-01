@@ -1,0 +1,64 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Users {
+  id               Int                      @id @default(autoincrement())
+  customer_id      String                   @unique
+  user_reference   String                   @unique
+  name             String
+  email            String                   @unique
+  cpf              String                   @unique
+  password         String
+  phone            String?
+  avatar           String?
+  user_discord     String?                 
+  status           Status                   @default(pending)
+  createdAt        DateTime                 @default(now())
+  updatedAt        DateTime                 @updatedAt
+  activationTokens AccountActivationToken[]
+  recoverTokens    RecoverTokens[]
+}
+
+enum Status {
+  pending
+  active
+  blocked
+  banned
+  suspense
+}
+
+model AccountActivationToken {
+  id             Int      @id @default(autoincrement())
+  user_reference String 
+  user           Users    @relation(fields: [user_reference], references: [user_reference], onDelete: Cascade, onUpdate: Cascade)
+  email          String
+  token          String   @unique
+  token_used     Boolean  @default(false)
+  tokens_old     String?
+  resent         Boolean  @default(false)
+  times_resent   Int      @default(0)
+  token_expired  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model RecoverTokens {
+  id             Int      @id @default(autoincrement())
+  user_reference String 
+  user           Users    @relation(fields: [user_reference], references: [user_reference], onDelete: Cascade, onUpdate: Cascade)
+  email          String
+  token          String   @unique
+  token_used     Boolean  @default(false)
+  tokens_old     String?
+  resent         Boolean  @default(false)
+  times_resent   Int      @default(0)
+  token_expired  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

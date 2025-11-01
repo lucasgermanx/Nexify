@@ -1,0 +1,33 @@
+/* src/components/AsideBar.css */
+.aside-bar {
+  width: 20rem;
+  height: 100%;
+  background-color: white;
+  color: black;
+  padding-top: 1rem;
+  margin-right: 10rem;
+  margin-left: 3rem;
+  display: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+li:hover {
+  color: #ff9800;
+}
+
+/* Responsiveness for smaller screens */
+@media screen and (min-width: 1480px) {
+  .aside-bar {
+    display: block;
+  }
+}

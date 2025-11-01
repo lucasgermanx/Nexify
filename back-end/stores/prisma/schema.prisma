@@ -1,0 +1,273 @@
+// Datasource: Configuração da base de dados
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Generator: Gera o cliente Prisma para interações com a base de dados
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Model: Stores (Lojas)
+model Stores {
+  id               Int            @id @default(autoincrement())
+  user_reference   String // Referência do usuário associado à loja
+  store_reference  String         @unique // Identificador único da loja
+  store_name       String // Nome da loja
+  store_subdomain  String         @unique // Subdomínio único da loja
+  store_domain     String?        @unique // Domínio personalizado (opcional)
+  store_status     Status         @default(activated) // Status da loja
+  store_plan       String // Plano associado à loja
+  store_money_type MoneyType      @default(BRL) // Tipo de moeda da loja
+  store_trial      Boolean        @default(true) // Indica se a loja está em período de teste
+  store_token      String         @unique // Token único da loja
+  maintenance      Boolean        @default(false) // Indica se a loja está em manutenção
+  due_date         DateTime?
+  createdAt        DateTime       @default(now()) // Data de criação
+  updatedAt        DateTime       @updatedAt // Data de atualização
+  contents         Contents[] // Relacionamento um-para-muitos com `Contents`
+  mercadopago      MercadoPago? // Relacionamento um-para-um com `MercadoPago`
+  picpay           PicPay?
+  Products         Products[]
+  Categories       Categories[]
+  Transactions     Transactions[]
+}
+
+// Enum: Status (Status da loja)
+enum Status {
+  activated
+  cancelled
+  expired
+  disabled
+}
+
+// Enum: MoneyType (Tipos de moeda)
+enum MoneyType {
+  BRL
+  USD
+  EUR
+}
+
+// Model: Contents (Conteúdos relacionados às lojas)
+model Contents {
+  id              Int        @id @default(autoincrement())
+  store_reference String     @unique // Referência da loja
+  stores          Stores     @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+  logo            String?    @db.LongText() // URL ou base64 do logo (opcional)
+  favicon         String?    @db.LongText() // URL ou base64 do favicon (opcional)
+  banner          String?    @db.LongText() // URL ou base64 do banner (opcional)
+  title           String?    @default("Loja FiveMarket") // Título padrão
+  description     String?    @default("Altere a descrição em seu painel na área de edição de template") // Descrição padrão
+  widget_discord  String?    @default("776623816339619840") // Widget de integração com Discord
+  widget_fiveM    String?    @default("fivemarket.com.br") // Widget de integração com FiveM
+  createdAt       DateTime   @default(now()) // Data de criação
+  updatedAt       DateTime   @updatedAt // Data de atualização
+  partials        Partials[] // Relacionamento um-para-muitos com `Partials`
+}
+
+// Model: Partials (Partes customizáveis do conteúdo)
+model Partials {
+  id              Int      @id @default(autoincrement())
+  store_reference String // Referência da loja
+  header          String?  @db.LongText() // Conteúdo do cabeçalho (opcional)
+  body            String?  @db.LongText() // Conteúdo do corpo (opcional)
+  footer          String?  @db.LongText() // Conteúdo do rodapé (opcional)
+  contents        Contents @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+}
+
+// Model: Subscriptions (Assinaturas de lojas)
+model subscriptions {
+  id              Int                 @id @default(autoincrement())
+  customer_id     String // Identificador do cliente
+  store_reference String              @unique // Referência única da loja
+  subscription_id String              @unique // Identificador único da assinatura
+  cycle           Cycle // Ciclo de pagamento (enum)
+  status          StatusSubscriptions @default(ACTIVE) // Status da assinatura
+  value           Float // Valor da assinatura
+  deleted         Boolean // Indica se a assinatura foi removida
+  invoices        invoices[] // Relacionamento um-para-muitos com `invoices`
+  createdAt       DateTime            @default(now()) // Data de criação
+  updatedAt       DateTime            @updatedAt // Data de atualização
+}
+
+// Enum: Cycle (Ciclo de pagamento)
+enum Cycle {
+  MONTHLY
+}
+
+// Enum: StatusSubscriptions (Status das assinaturas)
+enum StatusSubscriptions {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+// Model: Invoices (Faturas das assinaturas)
+model invoices {
+  id                    Int            @id @default(autoincrement())
+  invoice_reference     String // Referência da fatura
+  payment_id            String         @unique // Identificador único do pagamento
+  subscription_id       String // Identificador único da assinatura
+  subscription          subscriptions  @relation(fields: [subscription_id], references: [subscription_id])
+  status                StatusPayments @default(PENDING) // Status do pagamento
+  invoiceUrl            String // URL da fatura
+  invoiceNumber         String // Número da fatura
+  paymentDate           String // Data do pagamento
+  creditDate            String // Data de crédito
+  transactionReceiptUrl String // URL do comprovante da transação
+  refundReceiptUrl      String? // URL do comprovante de reembolso (opcional)
+  billingType           String? // Tipo de cobrança (opcional)
+  creditCardNumber      Int? // Número do cartão de crédito (opcional)
+  creditCardBrand       String? // Bandeira do cartão de crédito (opcional)
+  createdAt             DateTime       @default(now()) // Data de criação
+  updatedAt             DateTime       @updatedAt // Data de atualização
+}
+
+// Enum: StatusPayments (Status dos pagamentos)
+enum StatusPayments {
+  PENDING
+  RECEIVED
+  CONFIRMED
+  OVERDUE
+  REFUNDED
+  RECEIVED_IN_CASH
+  REFUND_REQUESTED
+  REFUND_IN_PROGRESS
+  CHARGEBACK_REQUESTED
+  CHARGEBACK_DISPUTE
+  AWAITING_CHARGEBACK_REVERSAL
+  DUNNING_REQUESTED
+  DUNNING_RECEIVED
+  AWAITING_RISK_ANALYSIS
+}
+
+// Model: MercadoPago (Configurações do Mercado Pago)
+model MercadoPago {
+  id              Int      @id @default(autoincrement())
+  store_reference String   @unique // Referência única da loja
+  stores          Stores   @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+  access_token    String?  @db.LongText() // Token de acesso (opcional)
+  createdAt       DateTime @default(now()) // Data de criação
+  updatedAt       DateTime @updatedAt // Data de atualização
+}
+
+// Model: PicPay (Configurações do PicPay)
+model PicPay {
+  id              Int      @id @default(autoincrement())
+  store_reference String   @unique // Referência única da loja
+  stores          Stores   @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+  picpayToken     String?  @db.LongText() // Token de acesso (opcional)
+  sellerToken     String?  @db.LongText() // Token de acesso (opcional)
+  createdAt       DateTime @default(now()) // Data de criação
+  updatedAt       DateTime @updatedAt // Data de atualização
+}
+
+// Model para Produtos
+model Products {
+  id                     Int            @id @default(autoincrement())
+  category_reference     String
+  store_reference        String
+  stores                 Stores         @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+  product_reference      String         @unique
+  product_name           String
+  product_description    String         @db.LongText
+  product_price          String
+  product_price_discount String
+  product_visibility     String
+  product_stock          Int
+  expire_day             String
+  product_image          Bytes
+  variables              String
+  category               Categories     @relation(fields: [category_reference], references: [category_reference], onDelete: Cascade, onUpdate: Cascade)
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  deletedAt              DateTime?
+  Transactions           Transactions[]
+}
+
+// Model para Categorias
+model Categories {
+  id                 Int        @id @default(autoincrement())
+  category_reference String     @unique
+  store_reference    String
+  stores             Stores     @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+  category           String
+  category_slug      String
+  category_icon      String
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  deletedAt          DateTime?
+  products           Products[]
+}
+
+// Model para Variáveis
+model Variables {
+  id                 Int       @id @default(autoincrement())
+  store_reference    String
+  variable_reference String    @unique
+  variable           String
+  commands           String    @db.Text
+  option_name        String
+  quantity           Int
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+}
+
+// Model para Cupons
+
+// Model para Transações
+model Transactions {
+  id                    Int                         @id @default(autoincrement())
+  transaction_reference String
+  buyer                 String
+  store_reference       String
+  stores                Stores                      @relation(fields: [store_reference], references: [store_reference], onDelete: Cascade, onUpdate: Cascade)
+  product_reference     String
+  product               Products                    @relation(fields: [product_reference], references: [product_reference], onDelete: Cascade, onUpdate: Cascade)
+  price_paid            String
+  coupon                String
+  coupon_discount       Float
+  coupon_type           String
+  form_of_payments      String
+  status_payment        StatusPayumentsTransactions @default(pending)
+  order_delivered       Boolean                     @default(false)
+  quantity              Int
+  variable              String
+  automatic_update      Boolean                     @default(true)
+  createdAt             DateTime                    @default(now())
+  updatedAt             DateTime                    @updatedAt
+}
+
+enum StatusPayumentsTransactions {
+  pending
+  approved
+  authorized
+  in_process
+  in_mediation
+  rejected
+  cancelled
+  refunded
+  charged_back
+}
+
+model Coupons {
+  id              Int        @id @default(autoincrement())
+  store_reference String
+  reference       String     @unique()
+  coupon          String
+  coupon_discount Float
+  limited_used    Int
+  used            Int?       @default(0)
+  type            TypeCoupon
+  activated       Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  deletedAt       DateTime?
+}
+
+enum TypeCoupon {
+  percentage
+  direct
+}

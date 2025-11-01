@@ -1,0 +1,22 @@
+.hover-effect:hover i,
+.hover-effect:hover span {
+  color: orange !important;
+}
+
+input::placeholder {
+  font-size: 14px;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+/* CSS */
+.gap-4 > * + * {
+  margin-left: 1rem; /* Adiciona 1 rem de espaçamento entre os itens */
+}
+
+.active>.page-link, .page-link.active {
+  background-color:orange !important;
+  border: 0px;
+}

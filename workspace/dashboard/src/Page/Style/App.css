@@ -1,0 +1,53 @@
+/* src/App.css */
+.app {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  padding: 20px;
+}
+
+.main-content {
+  flex-grow: 1;
+  border-left: 1px solid #f4f4f4;
+  border-right: 1px solid #f4f4f4;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-text {
+  flex-grow: 1;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+  margin-right: 4rem;
+}
+
+.left-button,
+.right-button {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+
+@media screen and (max-width: 768px) {
+  .header-buttons {
+    margin: 0px;
+  }
+  .main-content{
+    overflow-x: auto;
+    flex-grow: 0;
+  }
+}

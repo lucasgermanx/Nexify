@@ -1,0 +1,59 @@
+{
+  "plans": [
+    {
+      "id": "Starter",
+      "name": "Plano Starter",
+      "price": "19,90",
+      "duration": "/mês",
+      "description": "Plano básico para iniciantes.",
+      "features": [
+        "Até 5 categorias",
+        "Até 30 produtos",
+        "Cupons ilimitados",
+        "Notícias ilimitadas",
+        "Tema Padrão",
+        "1 sub-usuário",
+        "Sem BOT Discord",
+        "Sem domínio personalizado"
+      ],
+      "highlighted": false
+    },
+    {
+      "id": "Common",
+      "name": "Plano Common",
+      "price": "39,90",
+      "duration": "/mês",
+      "description": "Plano intermediário para servidores que desejam mais recursos.",
+      "features": [
+        "Categorias ilimitadas",
+        "Produtos ilimitados",
+        "Cupons ilimitados",
+        "Notícias ilimitadas",
+        "BOT Discord",
+        "Tema Padrão",
+        "2 sub-usuários",
+        "Sem domínio personalizado"
+      ],
+      "highlighted": true
+    },
+    {
+      "id": "Enterprise",
+      "name": "Plano Enterprise",
+      "price": "69,90",
+      "duration": "/mês",
+      "description": "Plano avançado para servidores profissionais.",
+      "features": [
+        "Categorias ilimitadas",
+        "Produtos ilimitados",
+        "Cupons ilimitados",
+        "Notícias ilimitadas",
+        "BOT Discord",
+        "Domínio personalizado",
+        "Temas exclusivos",
+        "Editor de Template",
+        "Gerenciamento de sub-usuários ilimitado"
+      ],
+      "highlighted": false
+    }
+  ]
+}

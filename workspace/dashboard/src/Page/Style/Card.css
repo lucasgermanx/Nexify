@@ -1,0 +1,37 @@
+/* src/components/MetricsCard.css */
+.cards-container {
+  display: flex;
+}
+
+.card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-right:5rem;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-value {
+  font-size: 36px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Responsiveness for smaller screens */
+@media screen and (max-width: 768px) {
+  .card {
+    margin-right: 1rem; /* Show 1 card per row */
+  }
+}

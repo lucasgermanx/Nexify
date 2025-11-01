@@ -1,0 +1,22 @@
+// tsconfig.json
+{
+  "ts-node": {
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": ["tsconfig-paths/register"]
+  },
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": false,
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@setup": ["src/setup/*"]
+    },
+  },
+  "include": ["src"]
+}

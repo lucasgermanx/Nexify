@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AccountActivationToken {
+  id             Int      @id @default(autoincrement())
+  user_reference String
+  email          String
+  token          String   @unique
+  token_used     Boolean  @default(false)
+  tokens_old     String?
+  resent         Boolean  @default(false)
+  times_resent   Int      @default(0)
+  token_expired  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  Users          Users    @relation(fields: [user_reference], references: [user_reference], onDelete: Cascade)
+
+  @@index([user_reference], map: "AccountActivationToken_user_reference_fkey")
+}
+
+model RecoverTokens {
+  id             Int      @id @default(autoincrement())
+  user_reference String
+  email          String
+  token          String   @unique
+  token_used     Boolean  @default(false)
+  tokens_old     String?
+  resent         Boolean  @default(false)
+  times_resent   Int      @default(0)
+  token_expired  Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  Users          Users    @relation(fields: [user_reference], references: [user_reference], onDelete: Cascade)
+
+  @@index([user_reference], map: "RecoverTokens_user_reference_fkey")
+}
+
+model Users {
+  id                     Int                      @id @default(autoincrement())
+  customer_id            String                   @unique
+  user_reference         String                   @unique
+  name                   String
+  email                  String                   @unique
+  cpf                    String                   @unique
+  password               String
+  phone                  String?
+  avatar                 String?
+  user_discord           String?                  @unique
+  status                 Users_status             @default(pending)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime
+  AccountActivationToken AccountActivationToken[]
+  RecoverTokens          RecoverTokens[]
+}
+
+enum Users_status {
+  pending
+  active
+  blocked
+  banned
+  suspense
+}
