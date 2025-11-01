@@ -1,4 +1,4 @@
-import logo from "@/assets/images/logo.png";
+import logo from "@/assets/images/logo_white.png";
 import styled from '@emotion/styled';
 import React from 'react';
 import { Logo } from "../styles/SideBarStyle";

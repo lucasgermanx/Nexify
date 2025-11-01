@@ -202,7 +202,7 @@ export const SidebarComponent = () => {
           </Menu>
         </div>
 
-        <MenuContainerBottom theme={theme as any}>
+        <MenuContainerBottom theme={theme as any} style={{ marginLeft: "-8px" }}>
           <Menu menuItemStyles={menuItemStyles}>
             <Link to="/settings">
               <MenuItem icon={<CiSettings fontSize={20} color="#ffffff" />}>

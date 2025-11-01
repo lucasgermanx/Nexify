@@ -32,58 +32,88 @@ const StyledHeader = styled(Card.Header)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #121212;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.05) 0%, rgba(255, 165, 0, 0.02) 100%);
+  border-bottom: 2px solid rgba(255, 140, 0, 0.2);
   padding: 20px 24px;
   border-radius: 12px 12px 0 0;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%);
+    border-radius: 12px 12px 0 0;
+  }
 `;
 
 const StyledContent = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 `;
 
-const StyledTitle = styled.h6`
-  margin-top: 0.75rem;
-  margin-right: 10px;
+const StyledTitle = styled.h5`
+  margin: 0;
   color: white;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
 `;
 
 const StyledBadgeContainer = styled.div`
   display: flex;
-  margin-left: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
 `;
 
 const StyledBadge = styled(Badge)`
-  margin-right: 10px;
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
 `;
 
 const StyledSlugBadge = styled(Badge)`
-  background-color: rgba(255, 140, 0, 0.2) !important;
+  background-color: rgba(255, 140, 0, 0.15) !important;
   color: #ff8c00;
   border: 1px solid rgba(255, 140, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+`;
+
+const ActionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
 `;
 
 const TransparentDropdownButton = styled(DropdownButton)`
   &&& .dropdown-toggle {
-    background-color: transparent;
-    border: 0;
-    padding: 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
     margin: 0;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 18px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
     
     &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 140, 0, 0.3);
       color: #ff8c00;
     }
   }
-  float: right;
-  padding-left: 10px;
-  padding-top: 4px;
 `;
 
 const CategoryCard = ({ category }: any) => {
@@ -108,34 +138,47 @@ const CategoryCard = ({ category }: any) => {
       <StyledCard>
         <StyledHeader>
           <StyledContent>
-            <StyledTitle className="mt-2">{category?.category}</StyledTitle>
+            <StyledTitle>{category?.category}</StyledTitle>
             <StyledBadgeContainer>
-              <StyledBadge>ID:{category?.id}</StyledBadge>
+              <StyledBadge>ID: {category?.id}</StyledBadge>
               <StyledSlugBadge>SLUG: {category?.category_slug}</StyledSlugBadge>
+              {category?.products && (
+                <StyledBadge style={{ 
+                  background: 'rgba(34, 197, 94, 0.15) !important',
+                  color: '#22c55e',
+                  borderColor: 'rgba(34, 197, 94, 0.3)'
+                }}>
+                  {category.products.length} {category.products.length === 1 ? 'produto' : 'produtos'}
+                </StyledBadge>
+              )}
             </StyledBadgeContainer>
           </StyledContent>
-          <div>
-            <ButtonGreen onClick={handleModalProductCreateOpen}>Novo produto</ButtonGreen>
+          <ActionsContainer>
+            <ButtonGreen onClick={handleModalProductCreateOpen} style={{ fontWeight: '600' }}>
+              Novo produto
+            </ButtonGreen>
             <TransparentDropdownButton title={<MdMoreVert />}>
               <Dropdown.Item onClick={handleShowModalUpdateCategories}>
-                Editar
+                Editar categoria
               </Dropdown.Item>
-              <Dropdown.Item onClick={handleShow}>Excluir</Dropdown.Item>
+              <Dropdown.Item onClick={handleShow} style={{ color: '#ef4444' }}>
+                Excluir categoria
+              </Dropdown.Item>
             </TransparentDropdownButton>
-          </div>
+          </ActionsContainer>
         </StyledHeader>
         <Card.Body style={{ backgroundColor: '#121212', padding: '24px' }}>
-          <Row className="mt-3">
-            {category?.products && category?.products.length > 0 ? (
-              category?.products.map((item: any) => (
-                <Col md={3} key={item.id}>
+          {category?.products && category?.products.length > 0 ? (
+            <Row style={{ marginTop: '0' }}>
+              {category?.products.map((item: any) => (
+                <Col md={3} sm={6} key={item.id} style={{ marginBottom: '1rem', paddingLeft: '0.5rem', paddingRight: '0.5rem' }}>
                   <ProductCardComponent category={category} product={item} />
                 </Col>
-              ))
-            ) : (
-              <NotFoundList title="Nenhum produto encontrado."></NotFoundList>
-            )}
-          </Row>
+              ))}
+            </Row>
+          ) : (
+            <NotFoundList title="Nenhum produto encontrado nesta categoria."></NotFoundList>
+          )}
         </Card.Body>
       </StyledCard>
 
