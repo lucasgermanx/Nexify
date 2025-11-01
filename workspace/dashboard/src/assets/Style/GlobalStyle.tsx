@@ -276,6 +276,39 @@ export const GlobalStyle = createGlobalStyle`
     color: rgba(255, 255, 255, 0.8) !important;
     font-weight: 500;
   }
+
+  /* Tabs Dark Theme */
+  .nav-tabs {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05) !important;
+    margin-bottom: 24px;
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.6) !important;
+      background-color: transparent !important;
+      border: none !important;
+      border-bottom: 2px solid transparent !important;
+      padding: 12px 24px !important;
+      font-weight: 500 !important;
+      transition: all 0.3s ease !important;
+      margin-right: 8px;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8) !important;
+        border-bottom-color: rgba(255, 140, 0, 0.5) !important;
+      }
+
+      &.active {
+        color: #ff8c00 !important;
+        background-color: transparent !important;
+        border-bottom: 2px solid #ff8c00 !important;
+        font-weight: 600 !important;
+      }
+    }
+  }
+
+  .tab-content {
+    color: rgba(255, 255, 255, 0.9);
+  }
 `;
 
 

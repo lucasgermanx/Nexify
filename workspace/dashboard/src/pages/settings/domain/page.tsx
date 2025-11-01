@@ -33,9 +33,9 @@ export const DomainSettingsPage = () => {
     <section>
       <Col md={12}>
         <CardForm>
-          <div style={{ padding: "2%" }}>
-            <h4 className="p-0 m-0">Configurações básicas da sua loja</h4>
-            <small>Personalize os dados da sua loja</small>
+          <div style={{ padding: "24px" }}>
+            <h4 style={{ color: 'white', fontWeight: '600', marginBottom: '8px', padding: 0, margin: '0 0 8px 0' }}>Configurações básicas da sua loja</h4>
+            <small style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Personalize os dados da sua loja</small>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Row className="mt-5">
                 <Col md={12}>
@@ -47,7 +47,7 @@ export const DomainSettingsPage = () => {
                 {store?.store_plan == "Enterprise" && (
                   <Col md={12} className="mt-3">
                     <FormGroup label="Domínio" placeholder="Domínio" />
-                    <p style={{ fontSize: "13px", color: "orange" }}>A função do domínio está atualmente em manutenção. Aguarde o retorno da equipe.</p>
+                    <p style={{ fontSize: "13px", color: "#ff8c00", marginTop: '8px' }}>A função do domínio está atualmente em manutenção. Aguarde o retorno da equipe.</p>
                   </Col>
                 )}
                 <Col md={12} className="mt-3">
@@ -55,7 +55,7 @@ export const DomainSettingsPage = () => {
                 </Col>
               </Row>
               <div className="d-flex justify-content-end mt-4">
-                <ButtonOrange style={{ height: "35px", backgroundColor: "#303030" }} type="submit">
+                <ButtonOrange style={{ height: "40px", fontWeight: '600' }} type="submit">
                   Alterar dados
                 </ButtonOrange>
               </div>

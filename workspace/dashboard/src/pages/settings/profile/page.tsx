@@ -23,15 +23,15 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <section className="mt-5">
-        <div >
+      <section style={{ marginTop: '0' }}>
+        <div>
           <Col md={12}>
             <CardForm>
-              <div style={{ padding: "2%" }}>
-                <h4 className="p-0 m-0">
+              <div style={{ padding: "24px" }}>
+                <h4 style={{ color: 'white', fontWeight: '600', marginBottom: '8px', padding: 0, margin: '0 0 8px 0' }}>
                   Configurações básicas do seu usuário
                 </h4>
-                <small>Personalize os dados do seu perfil</small>
+                <small style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Personalize os dados do seu perfil</small>
                 <section>
                   <Form onSubmit={handleSubmit(onSubmit)}>
                     <Row className="mt-5">
@@ -67,7 +67,7 @@ export const ProfilePage = () => {
 
                     <div className="d-flex justify-content-end mt-4">
                       <ButtonOrange
-                        style={{ height: "35px", backgroundColor: "#303030" }}
+                        style={{ height: "40px", fontWeight: '600' }}
                         type="submit"
                       >
                         Alterar dados
@@ -76,8 +76,8 @@ export const ProfilePage = () => {
                   </Form>
                   <Row className="mt-4">
                     <Col md={8} className="mt-5">
-                      <p className="p-0 m-0">Alterar minha senha</p>
-                      <small>
+                      <p style={{ color: 'white', fontWeight: '500', margin: 0 }}>Alterar minha senha</p>
+                      <small style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                         Utilize o botão ao lado para atualizar a senha da sua
                         conta
                       </small>
@@ -85,9 +85,9 @@ export const ProfilePage = () => {
                     <Col md={4} className="mt-5">
                       <ButtonOrange
                         style={{
-                          height: "35px",
+                          height: "40px",
                           width: "100%",
-                          backgroundColor: "#303030",
+                          fontWeight: '600',
                         }}
                         onClick={showModalUpdateAction}
                       >
