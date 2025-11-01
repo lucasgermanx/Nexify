@@ -21,15 +21,21 @@ import { ProductCardComponent } from "./card-product.component";
 import { ModalProductCreate } from "./modal-product-create.component";
 
 const StyledCard = styled(Card)`
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: #121212;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
 `;
 
 const StyledHeader = styled(Card.Header)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #dee1ef;
-  border: 0;
+  background-color: #121212;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 20px 24px;
+  border-radius: 12px 12px 0 0;
 `;
 
 const StyledContent = styled.div`
@@ -40,6 +46,8 @@ const StyledContent = styled.div`
 const StyledTitle = styled.h6`
   margin-top: 0.75rem;
   margin-right: 10px;
+  color: white;
+  font-weight: 600;
 `;
 
 const StyledBadgeContainer = styled.div`
@@ -49,13 +57,15 @@ const StyledBadgeContainer = styled.div`
 
 const StyledBadge = styled(Badge)`
   margin-right: 10px;
-  background-color: #c4c4c4 !important;
-  color: black;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const StyledSlugBadge = styled(Badge)`
-  background-color: #95edb5 !important;
-  color: black;
+  background-color: rgba(255, 140, 0, 0.2) !important;
+  color: #ff8c00;
+  border: 1px solid rgba(255, 140, 0, 0.3);
 `;
 
 const TransparentDropdownButton = styled(DropdownButton)`
@@ -64,8 +74,12 @@ const TransparentDropdownButton = styled(DropdownButton)`
     border: 0;
     padding: 0;
     margin: 0;
-    color: black;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 18px;
+    
+    &:hover {
+      color: #ff8c00;
+    }
   }
   float: right;
   padding-left: 10px;
@@ -110,7 +124,7 @@ const CategoryCard = ({ category }: any) => {
             </TransparentDropdownButton>
           </div>
         </StyledHeader>
-        <Card.Body>
+        <Card.Body style={{ backgroundColor: '#121212', padding: '24px' }}>
           <Row className="mt-3">
             {category?.products && category?.products.length > 0 ? (
               category?.products.map((item: any) => (

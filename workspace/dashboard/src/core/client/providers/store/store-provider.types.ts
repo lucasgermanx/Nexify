@@ -13,6 +13,7 @@ export interface Store {
     store_default_payment: string;
     createdAt: string; // Formato de data e hora, pode ser um tipo Date
     updatedAt: string; // Formato de data e hora, pode ser um tipo Date
+    due_date?: string; // Data de vencimento da assinatura
     contents: [{
         id: number;
         store_reference: string;

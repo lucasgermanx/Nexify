@@ -3,7 +3,7 @@ export type SubscriptionContextType = {
   ProviderGetLastInvoice: () => void;
 };
 
-interface Invoice {
+export interface Invoice {
   id: number;
   invoice_reference: string;
   payment_id: string;
@@ -22,7 +22,7 @@ interface Invoice {
   updatedAt: string;
 }
 
-interface Subscription {
+export interface Subscription {
   id: number;
   customer_id: string;
   store_reference: string;

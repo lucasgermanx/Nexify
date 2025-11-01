@@ -31,21 +31,32 @@ export const MenuComponentWrapper = styled.div<MenuComponentWrapperProps>`
     opacity: ${({ menuVisible }) => (menuVisible ? 1 : 0)};
     visibility: ${({ menuVisible }) => (menuVisible ? "visible" : "hidden")};
     transform: ${({ menuVisible }) =>
-      menuVisible ? "translateX(0)" : "translateX(-100%)"};
+    menuVisible ? "translateX(0)" : "translateX(-100%)"};
     transition: all 0.3s ease-in-out;
   }
 `;
 
 export const ContainerWrapper = styled.div`
-  background-color: white;
+  background-color: #141414;
+  min-height: 100vh;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+  padding: 0;
+  overflow-x: hidden;
 
-  flex-basis: 100%;
-
-  @media (min-width: 768px) {
-    flex-basis: 90%;
-    padding-right: 100px;
+  @media (min-width: 769px) {
+    margin-left: var(--sidebar-width, 280px);
+    width: calc(100% - var(--sidebar-width, 280px));
+    padding: 2rem;
+    box-sizing: border-box;
   }
-  padding-left: 3%;
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
 `;
 
 export const StyledContainer = styled(Container)`

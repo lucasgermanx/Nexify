@@ -10,11 +10,129 @@ export const GlobalStyle = createGlobalStyle`
   font-style: normal;
   }
 
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  /* Custom Scrollbar Dark Theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #121212;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 140, 0, 0.6);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 140, 0, 0.3) #121212;
+  }
+
   body {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     letter-spacing: 0.02em;
     line-height: 1.6;
+    background-color: #141414;
+    color: #e2e8f0;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Fix sidebar content clipping */
+  .pro-sidebar {
+    overflow: visible !important;
+  }
+
+  .pro-sidebar-inner {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .pro-sidebar-content {
+    overflow: visible !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .ps-menu-root {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .ps-menu-button {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* FilePond Dark Theme */
+  .filepond--root {
+    background-color: #121212 !important;
+    color: #e2e8f0 !important;
+  }
+
+  .filepond--panel-root {
+    background-color: #121212 !important;
+    border: 1px dashed rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .filepond--drop-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .filepond--label-action {
+    color: #ff8c00 !important;
+    
+    &:hover {
+      color: #ffa500 !important;
+    }
+  }
+
+  .filepond--item-panel {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* InputGroup Dark Theme */
+  .input-group-text {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  /* Dropdown Dark Theme */
+  .dropdown-menu {
+    background-color: #121212 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
+    
+    .dropdown-item {
+      color: rgba(255, 255, 255, 0.8) !important;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        color: #ff8c00 !important;
+      }
+      
+      &:active, &:focus {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #ff8c00 !important;
+      }
+    }
   }
   
   .avatar-circle {
@@ -31,14 +149,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .text-welcome {
-    color: #0C1D59;
+    color: #e2e8f0;
     padding: 3%;
     font-weight: 600;
   }
 
   .border-card {
-    border: 0.5px solid #F2F2F2;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 8px !important;
+    background-color: #121212;
   }
   
   .page-link{
@@ -71,7 +190,91 @@ export const GlobalStyle = createGlobalStyle`
 
   a{
     text-decoration:none;
-    color: black;
+    color: #e2e8f0;
+    
+    &:hover {
+      color: #ff8c00;
+    }
+  }
+
+  /* Modal Dark Theme Styles */
+  .modal-content {
+    background-color: #121212 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    color: #e2e8f0 !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background-color: transparent !important;
+    color: white !important;
+    
+    .modal-title {
+      color: white !important;
+      font-weight: 600;
+    }
+
+    .btn-close {
+      filter: invert(1) grayscale(100%) brightness(200%);
+    }
+  }
+
+  .modal-body {
+    background-color: transparent !important;
+    color: #e2e8f0 !important;
+    padding: 24px !important;
+
+    h5 {
+      color: white !important;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    h4, h3, h2, h1 {
+      color: white !important;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    label {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+
+  .modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background-color: transparent !important;
+  }
+
+  /* Form inputs dark theme */
+  .form-control, .form-select {
+    background-color: #121212 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #e2e8f0 !important;
+    
+    &:focus {
+      background-color: #121212 !important;
+      border-color: #ff8c00 !important;
+      color: #e2e8f0 !important;
+      box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25) !important;
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+  .form-label {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
   }
 `;
 
@@ -119,11 +322,11 @@ export const ButtonGreen = styled(Button)`
 
 export const ButtonTransparent = styled(Button)`
   background-color: transparent;
-  color: black;
+  color: #e2e8f0;
   border: 0;
 
   &:hover {
-    color: orange;
+    color: #ff8c00;
     background-color: transparent !important;
   }
 

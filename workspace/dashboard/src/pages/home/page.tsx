@@ -1,42 +1,67 @@
 import { useAuth } from "@/core/client/providers/auth/auth.provider";
-import AreaChart from "@/global/components/charts/area-chart.component";
 import HeroSection from "@/global/components/HeroSection";
 import NavbarComponent from "@/global/components/navbar.component";
-import { Card, Row } from "react-bootstrap";
-import { AiOutlineDeliveredProcedure } from "react-icons/ai";
-import { FaCheck } from "react-icons/fa";
-import { MdCancel, MdOutlinePending } from "react-icons/md";
-import useTransactions from "../transactions/hook";
-import HomeCardStatistic from "./components/home-card-statics.component";
+import { Row, Col } from "react-bootstrap";
+import { WelcomeCard } from "./style/home.style";
+import SubscriptionAlert from "./components/subscription-alert.component";
+import AdditionalStatsCards from "./components/additional-stats-cards.component";
+import AnnualRevenueCard from "./components/annual-revenue-card.component";
+import RecentPaymentsCard from "./components/recent-payments-card.component";
+import { PopularPackagesCard, PopularDiscountsCard } from "./components/popular-items-cards.component";
 
 const HomePage = () => {
   const { user } = useAuth();
-  const { transactionData } = useTransactions()
+
+  const currentDate = new Date();
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  };
+  const formattedDate = currentDate.toLocaleDateString('pt-BR', dateOptions);
 
   return (
     <>
       <HeroSection>
         <NavbarComponent />
         <>
-          <section className="mt-5">
-            <h3>Boas-vindas, {user.name}</h3>
-          </section>
-          <section className="mt-4">
-            <Row>
-              <HomeCardStatistic info={transactionData.transactions_approved} icon={<FaCheck />} text={"Vendas aprovadas"} />
-              <HomeCardStatistic info={transactionData.transactions_pending} icon={<MdOutlinePending />} text={"Vendas pendentes"} />
-              <HomeCardStatistic info={transactionData.order_delivered} icon={<AiOutlineDeliveredProcedure />} text={"Vendas entregues"} />
-              <HomeCardStatistic info={transactionData.order_not_delivered} icon={<MdCancel />} text={"Vendas não entregue"} />
-            </Row>
-          </section>
-          <section className="mt-5">
-            <Card style={{ border: '1px solid #f4f4f4' }}>
-              <Card.Body>
-                <h5>Análise de transações</h5>
-                <AreaChart />
-              </Card.Body>
-            </Card>
-          </section>
+          <WelcomeCard>
+            <div className="welcome-date">
+              Hoje é {formattedDate}
+            </div>
+            <div className="welcome-title">
+              Olá, <span className="orange-text">{user.name}</span> 👋
+            </div>
+            <p className="welcome-subtitle">
+              Pequenas ações geram grandes resultados
+            </p>
+          </WelcomeCard>
+
+          {/* Top Row - 4 Stats Cards */}
+          <AdditionalStatsCards />
+
+          {/* Middle Row - Alert + Revenue */}
+          <Row style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+            <Col lg={6}>
+              <SubscriptionAlert />
+            </Col>
+            <Col lg={6}>
+              <AnnualRevenueCard />
+            </Col>
+          </Row>
+
+          {/* Bottom Row - Payments + Popular Packages + Popular Discounts */}
+          <Row style={{ marginTop: '1rem' }}>
+            <Col lg={4}>
+              <RecentPaymentsCard />
+            </Col>
+            <Col lg={4}>
+              <PopularPackagesCard />
+            </Col>
+            <Col lg={4}>
+              <PopularDiscountsCard />
+            </Col>
+          </Row>
         </>
       </HeroSection>
     </>

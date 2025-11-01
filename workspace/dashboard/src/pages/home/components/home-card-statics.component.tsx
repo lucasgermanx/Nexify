@@ -1,22 +1,30 @@
 import { CardBody, CardContainer, SalesCount, SalesText } from '../style/home.style';
 
-const HomeCardStatistic = ({ info, icon, text }:any) => {
+const HomeCardStatistic = ({ info, icon, text, period }:any) => {
   return (
-    <div className="col-md-3">
-      <div className="card border-card">
-        <CardBody>
-          <CardContainer>
-            <p className="text-center mt-1" style={{ fontSize: '25px' }}>
-              {icon}
+    <CardBody>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '120px' }}>
+        <CardContainer>
+          <span style={{ fontSize: '20px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {icon}
+          </span>
+        </CardContainer>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', marginTop: 'auto' }}>
+          <SalesCount>{info || 0}</SalesCount>
+          <SalesText>{text}</SalesText>
+          {period && (
+            <p style={{ 
+              fontSize: '10px', 
+              color: '#64748b', 
+              margin: '4px 0 0 0',
+              fontWeight: '400'
+            }}>
+              {period}
             </p>
-          </CardContainer>
-          <div className='mt-3'>
-            <SalesCount>{info}</SalesCount>
-            <SalesText>{text}</SalesText>
-          </div>
-        </CardBody>
+          )}
+        </div>
       </div>
-    </div>
+    </CardBody>
   );
 };
 

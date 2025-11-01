@@ -9,15 +9,24 @@ import { ProductsModalUpdateHandler } from "../actions/products-actions";
 import { ModalProductUpdate } from "./modal-product-update.component";
 
 const ProductCardContainer = styled(Card)`
-  background-color: white;
-  margin-top:5%;
-  border: 0px;
-  border-radius:10px;
+  background-color: #121212;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const ProductTitle = styled.h4`
   text-align: center;
   font-weight: 700;
+  color: white;
 `;
 
 const ProductImage = styled.img`
@@ -56,7 +65,12 @@ export const ProductCardComponent = ({ product, category }: any) => {
   const {showModalUpdateProducts, handleCloseModalUpdateProducts, handleShowModalUpdateProducts} = ProductsModalUpdateHandler()
   return (
     <ProductCardContainer>
-      <Card.Body style={{ border: "1px solid #ccc", borderRadius: "10px" }}>
+      <Card.Body style={{ 
+        border: "1px solid rgba(255, 255, 255, 0.05)", 
+        borderRadius: "12px",
+        backgroundColor: '#121212',
+        padding: '20px'
+      }}>
         <ProductTitle>{product?.product_name}</ProductTitle>
         <div className="mt-2">
           <center>
@@ -71,7 +85,7 @@ export const ProductCardComponent = ({ product, category }: any) => {
           {product?.product_price_discount != 0 ? (
             <>
               <PriceContainer>
-                <p className="p-0 m-0" style={{fontWeight:"700"}}>de {formatReal(product?.product_price)} <br /> por apenas:</p>
+                <p className="p-0 m-0" style={{fontWeight:"700", color: "rgba(255, 255, 255, 0.6)"}}>de {formatReal(product?.product_price)} <br /> por apenas:</p>
                 <DiscountedPrice>{formatReal(product?.product_price_discount)}</DiscountedPrice>
               </PriceContainer>
             </>

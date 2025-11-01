@@ -13,6 +13,30 @@ import VariaveisTable from "./variables-table.component";
 export const ModalProductCreate = ({ showModal, handleModalClose, category }: any) => {
   const LabelInput = styled.label`
     font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+  `;
+
+  const StyledInputGroupButton = styled(Button)`
+    &&& {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+      font-size: 13px;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: white !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+      }
+      
+      &:focus {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: white !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        box-shadow: none !important;
+      }
+    }
   `;
 
   const categoryOptions = [{
@@ -35,7 +59,7 @@ export const ModalProductCreate = ({ showModal, handleModalClose, category }: an
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Container>
-            <h5>Cadastrar um novo produto</h5>
+            <h5 style={{ color: 'white', fontWeight: '600', marginBottom: '24px' }}>Cadastrar um novo produto</h5>
             <div className="mt-4">
               <Row>
                 <Col md={8}>
@@ -61,14 +85,14 @@ export const ModalProductCreate = ({ showModal, handleModalClose, category }: an
                         <Col md={6}>
                           <LabelInput className="mb-2">Preço</LabelInput>
                           <InputGroup>
-                            <Button style={{ backgroundColor: "#EDF2F7", border: "0px", color: "black", fontSize: "13px" }}>R$</Button>
+                            <StyledInputGroupButton>R$</StyledInputGroupButton>
                             <FormControl {...register("product_price", { required: true })} type="number" />
                           </InputGroup>
                         </Col>
                         <Col md={6}>
                           <LabelInput className="mb-2">Preço com desconto</LabelInput>
                           <InputGroup>
-                            <Button style={{ backgroundColor: "#EDF2F7", border: "0px", color: "black", fontSize: "13px" }}>R$</Button>
+                            <StyledInputGroupButton>R$</StyledInputGroupButton>
                             <FormControl {...register("product_price_discount", { required: false })} type="number" />
                           </InputGroup>
                         </Col>
@@ -76,7 +100,7 @@ export const ModalProductCreate = ({ showModal, handleModalClose, category }: an
                           <LabelInput className="mb-2 mt-4">Remover do cliente após:</LabelInput>
                           <InputGroup>
                             <FormControl {...register("expire_day", { required: false })} />
-                            <Button style={{ backgroundColor: "#EDF2F7", border: "0px", color: "black", fontSize: "13px" }}>Dias</Button>
+                            <StyledInputGroupButton>Dias</StyledInputGroupButton>
                           </InputGroup>
                         </Col>
                       </Row>

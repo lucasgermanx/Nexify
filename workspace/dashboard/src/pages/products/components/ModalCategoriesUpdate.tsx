@@ -17,11 +17,19 @@ export const ModalCategoriesUpdate = ({category, showModal, handleModalClose}:an
 
     return (
         <>
-            <Modal show={showModal} onHide={handleModalClose} animation={true} className="fade">
-                <Modal.Body>
+            <Modal 
+                show={showModal} 
+                onHide={handleModalClose} 
+                animation={true} 
+                className="fade"
+                centered
+            >
+                <Modal.Body style={{ backgroundColor: '#121212', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '12px' }}>
                     <Form onSubmit={handleSubmit(onSubmit)}>
                         <Container>
-                            <h5>Atualizar categoria</h5>
+                            <h5 style={{ color: 'white', fontWeight: '600', marginBottom: '24px' }}>
+                                Atualizar categoria
+                            </h5>
                             <Row>
                                 <Col md={6}>
                                     <div className="mt-4">
@@ -40,7 +48,7 @@ export const ModalCategoriesUpdate = ({category, showModal, handleModalClose}:an
                                 </Col>
                             </Row>
                         </Container>
-                        <div className="mt-5" style={{ display: "flex", justifyContent: "flex-end" }}>
+                        <div className="mt-5" style={{ display: "flex", justifyContent: "flex-end", gap: '12px' }}>
                             <ButtonTransparent onClick={handleModalClose}>Fechar</ButtonTransparent>
                             <ButtonOrange type="submit">Salvar</ButtonOrange>
                         </div>

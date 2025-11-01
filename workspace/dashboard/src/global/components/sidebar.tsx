@@ -13,21 +13,21 @@ type Theme = "light" | "dark";
 
 const themes = {
   light: {
-    sidebar: { backgroundColor: "#FFFFFF", color: "#474747" },
+    sidebar: { backgroundColor: "#121212", color: "#ffffff" },
     menu: {
-      menuContent: "#262626",
-      icon: "white",
-      hover: { backgroundColor: "white", color: "#FF9A36" },
-      disabled: { color: "#9fb6cf" },
+      menuContent: "#121212",
+      icon: "#ffffff",
+      hover: { backgroundColor: "rgba(255, 255, 255, 0.05)", color: "#ff8c00" },
+      disabled: { color: "rgba(255, 255, 255, 0.3)" },
     },
   },
   dark: {
-    sidebar: { backgroundColor: "#0b2948", color: "#8ba1b7" },
+    sidebar: { backgroundColor: "#121212", color: "#ffffff" },
     menu: {
-      menuContent: "#082440",
-      icon: "#59d0ff",
-      hover: { backgroundColor: "#00458b", color: "#b6c8d9" },
-      disabled: { color: "#3e5e7e" },
+      menuContent: "#121212",
+      icon: "#ffffff",
+      hover: { backgroundColor: "rgba(255, 255, 255, 0.05)", color: "#ff8c00" },
+      disabled: { color: "rgba(255, 255, 255, 0.3)" },
     },
   },
 };
@@ -60,8 +60,8 @@ const AvatarContainer = styled.div<AvatarContainerProps>`
   .user-name {
     padding-top: 5px;
     font-size: 14px;
-    font-weight: bold;
-    color: ${(props) => (props.theme === 'light' ? '#474747' : '#fff')};
+    font-weight: 600;
+    color: #ffffff;
   }
 `;
 
@@ -70,6 +70,8 @@ const MenuContainerBottom = styled.div`
   bottom: 100px;
   display: flex;
   align-items: center;
+  padding-left: 8px;
+  padding-right: 8px;
 `;
 
 interface SidebarContainerProps {
@@ -80,6 +82,23 @@ const SidebarContainer = styled.div<SidebarContainerProps>`
   display: flex;
   height: 100vh;
   direction: ${(props) => (props.rtl ? 'rtl' : 'ltr')};
+  overflow: visible;
+  
+  @media (min-width: 769px) {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Garantir que o conteúdo do sidebar não seja cortado */
+  .pro-sidebar {
+    overflow: visible !important;
+  }
+  
+  .pro-sidebar-inner {
+    overflow: visible !important;
+  }
 `;
 
 export default SidebarContainer;
@@ -92,24 +111,43 @@ export const SidebarComponent = () => {
   const [toggled, setToggled] = React.useState(false);
   const [broken, setBroken] = React.useState(false);
   const [rtl, setRtl] = React.useState(false);
-  const [theme, setTheme] = React.useState<Theme>("light");
+  const [theme, setTheme] = React.useState<Theme>("dark");
+
+  // Expor collapsed para ajustar o ContainerWrapper se necessário
+  React.useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--sidebar-width', collapsed ? '80px' : '280px');
+  }, [collapsed]);
 
   useEffect(() => {
     ProviderGetSelectedStore(store_reference);
   }, [stores]);
 
   const menuItemStyles: MenuItemStyles = {
-    root: { fontSize: "15px", fontWeight: 700 },
-    icon: { color: "white", [`&.${menuClasses.disabled}`]: { color: themes[theme].menu.disabled.color } },
-    SubMenuExpandIcon: { color: "#b6b7b9" },
+    root: { fontSize: "15px", fontWeight: 500, color: "#ffffff" },
+    icon: { color: "#ffffff", [`&.${menuClasses.disabled}`]: { color: themes[theme].menu.disabled.color } },
+    SubMenuExpandIcon: { color: "rgba(255, 255, 255, 0.5)" },
     subMenuContent: ({ level }) => ({
       backgroundColor: level === 0 ? hexToRgba(themes[theme].menu.menuContent, 1) : "transparent",
     }),
     button: {
+      color: "#ffffff",
       [`&.${menuClasses.disabled}`]: { color: themes[theme].menu.disabled.color },
-      "&:hover": { backgroundColor: "transparent", color: themes[theme].menu.hover.color },
+      "&:hover": {
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        color: "#ff8c00",
+        borderRadius: "8px",
+      },
+      "&.ps-active": {
+        backgroundColor: "rgba(255, 255, 255, 0.08)",
+        color: "#ff8c00",
+        borderRadius: "8px",
+      },
     },
-    label: ({ open }) => ({ fontWeight: open ? 600 : undefined }),
+    label: ({ open }) => ({
+      fontWeight: open ? 600 : 500,
+      color: "#ffffff",
+    }),
   };
 
   return (
@@ -121,38 +159,43 @@ export const SidebarComponent = () => {
         onBreakPoint={setBroken}
         breakPoint="md"
         backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, 1)}
-        rootStyles={{ color: themes[theme].sidebar.color, height: "100vh" }}
+        rootStyles={{
+          color: themes[theme].sidebar.color,
+          height: "100vh",
+          borderRight: "1px solid rgba(255, 255, 255, 0.05)",
+          overflow: "visible"
+        }}
       >
-        <SidebarHeader rtl={false} style={{ marginBottom: "54px", marginTop: "16px" }} />
+        <SidebarHeader rtl={false} style={{ marginBottom: "54px", marginTop: "16px", paddingLeft: "20px", paddingRight: "20px" }} />
         <div style={{ flex: 1, marginBottom: "32px" }}>
           <Menu menuItemStyles={menuItemStyles}>
             <Link to="/">
-              <MenuItem icon={<CiGrid41 fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiGrid41 fontSize={20} color="#ffffff" />}>
                 Visão Geral
               </MenuItem>
             </Link>
             <Link to="/produtos">
-              <MenuItem icon={<CiShoppingBasket fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiShoppingBasket fontSize={20} color="#ffffff" />}>
                 Produtos
               </MenuItem>
             </Link>
             <Link to="/comandos">
-              <MenuItem icon={<CiBoxes fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiBoxes fontSize={20} color="#ffffff" />}>
                 Comandos
               </MenuItem>
             </Link>
             <Link to="/cupons">
-              <MenuItem icon={<CiDiscount1 fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiDiscount1 fontSize={20} color="#ffffff" />}>
                 Cupons
               </MenuItem>
             </Link>
             <Link to="/blog">
-              <MenuItem icon={<CiViewTimeline fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiViewTimeline fontSize={20} color="#ffffff" />}>
                 Blog
               </MenuItem>
             </Link>
             <Link to="/transacoes">
-              <MenuItem icon={<CiDollar fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiDollar fontSize={20} color="#ffffff" />}>
                 Transações
               </MenuItem>
             </Link>
@@ -162,7 +205,7 @@ export const SidebarComponent = () => {
         <MenuContainerBottom theme={theme as any}>
           <Menu menuItemStyles={menuItemStyles}>
             <Link to="/settings">
-              <MenuItem icon={<CiSettings fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiSettings fontSize={20} color="#ffffff" />}>
                 Configurações
               </MenuItem>
             </Link>
@@ -171,7 +214,7 @@ export const SidebarComponent = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <MenuItem icon={<CiShop fontSize={20} color="#474747" />}>
+              <MenuItem icon={<CiShop fontSize={20} color="#ffffff" />}>
                 Visualizar minha loja
               </MenuItem>
             </a>

@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 export const StyledTable = styled(Table)`
   border: none;
+  color: rgba(255, 255, 255, 0.8);
+  
   th,
   td {
     border: none;
@@ -12,11 +14,21 @@ export const StyledTable = styled(Table)`
     font-weight: 500;
     letter-spacing: 0.02em;
     line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
   }
   th {
     font-size: 12px;
-    background-color: #f2f2f2;
+    background-color: rgba(255, 255, 255, 0.05);
     font-weight: 600;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  tbody tr {
+    background-color: transparent;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
   }
   .checkbox-cell {
     width: 50px;

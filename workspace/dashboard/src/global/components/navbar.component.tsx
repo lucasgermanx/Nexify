@@ -10,11 +10,11 @@ import { useManageStore } from "../../core/client/hooks/select-store-zuustand";
 import SelectGroup from "./select-group.component";
 
 const NavLink = styled(Nav.Link)`
-  color: black;
+  color: #e2e8f0;
   font-weight: 400;
   font-size: 14px;
   &:hover {
-    color: #ff9a36;
+    color: #ff8c00;
     transition: color 0.6s ease;
   }
 `;
@@ -35,10 +35,10 @@ function NavbarComponent({ title, buttonText, buttonAction, buttonAction2, butto
   const {store_reference, setStoreReference} = useManageStore()
   
   return (
-    <Navbar expand="lg">
+    <Navbar expand="lg" style={{ backgroundColor: 'transparent', paddingTop: '1rem' }}>
       <Container fluid>
         <Navbar.Brand href="/">
-          <h4 className="mt-2">
+          <h4 className="mt-2" style={{ color: 'white' }}>
             <strong>{title}</strong>
           </h4>
         </Navbar.Brand>

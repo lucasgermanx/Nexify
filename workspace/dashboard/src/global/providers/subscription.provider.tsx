@@ -9,6 +9,7 @@ export const SubscriptionContext = React.createContext<SubscriptionContextType |
 
 export const SubscriptionProvider = (props: any) => {
   const [url_invoice, setUrlInvoice] = useState<string | undefined>();
+  const [subscription, setSubscription] = useState<SubscriptionResponse['subscription'] | null>(null);
   const {store_reference} = useManageStore()
   
   const ProviderGetLastInvoice = async () => {
@@ -23,10 +24,12 @@ export const SubscriptionProvider = (props: any) => {
         }
 
         if(response.subscription == null){
+            setSubscription(null);
             return setUrlInvoice(undefined)
         }
         
-        setUrlInvoice(response.subscription.invoices[0].invoiceUrl)
+        setSubscription(response.subscription);
+        setUrlInvoice(response.subscription.invoices[0]?.invoiceUrl)
    } catch (error) {
         console.log(error)
     }
@@ -37,7 +40,7 @@ export const SubscriptionProvider = (props: any) => {
   },[store_reference])
 
   return (
-    <SubscriptionContext.Provider value={{url_invoice, ProviderGetLastInvoice}}>
+    <SubscriptionContext.Provider value={{url_invoice, subscription, ProviderGetLastInvoice}}>
       {props.children}
     </SubscriptionContext.Provider>
   );
