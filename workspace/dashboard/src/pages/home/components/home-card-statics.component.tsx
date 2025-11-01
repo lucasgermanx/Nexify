@@ -1,9 +1,9 @@
 import { CardBody, CardContainer, SalesCount, SalesText } from '../style/home.style';
 
 const HomeCardStatistic = ({ info, icon, text, period }:any) => {
-  return (
-    <CardBody>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '120px' }}>
+    return (
+        <CardBody style={{ height: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '150px' }}>
         <CardContainer>
           <span style={{ fontSize: '20px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {icon}

@@ -37,20 +37,23 @@ const HomePage = () => {
             </p>
           </WelcomeCard>
 
-          {/* Top Row - 4 Stats Cards */}
-          <AdditionalStatsCards />
+          {/* Subscription Alert */}
+          <SubscriptionAlert />
 
-          {/* Middle Row - Alert + Revenue */}
-          <Row style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-            <Col lg={6}>
-              <SubscriptionAlert />
+          {/* Layout: Cards à esquerda, Gráfico à direita */}
+          <Row style={{ marginTop: '1rem' }}>
+            {/* Coluna esquerda - Cards de estatísticas */}
+            <Col lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
+              <AdditionalStatsCards />
             </Col>
-            <Col lg={6}>
+
+            {/* Coluna direita - Gráfico de receita */}
+            <Col lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
               <AnnualRevenueCard />
             </Col>
           </Row>
 
-          {/* Bottom Row - Payments + Popular Packages + Popular Discounts */}
+          {/* Segunda linha - Últimos pagamentos, Pacotes populares e Descontos populares */}
           <Row style={{ marginTop: '1rem' }}>
             <Col lg={4}>
               <RecentPaymentsCard />

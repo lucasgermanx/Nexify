@@ -7,14 +7,11 @@ import styled from "styled-components";
 
 const CompactStatsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  margin-top: 0;
+  margin-bottom: 0;
+  align-items: stretch;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

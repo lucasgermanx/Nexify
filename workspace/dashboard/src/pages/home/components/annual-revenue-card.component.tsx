@@ -8,9 +8,10 @@ const RevenueCard = styled(Card)`
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   margin-top: 0;
+  width: 100%;
   
   .card-header {
-    padding: 12px 16px;
+    padding: 16px 24px;
     background-color: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     
@@ -18,46 +19,63 @@ const RevenueCard = styled(Card)`
       color: white;
       font-weight: 600;
       margin: 0;
-      font-size: 0.875rem;
+      font-size: 1rem;
     }
   }
   
   .card-body {
-    padding: 16px;
+    padding: 24px;
+    min-height: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .revenue-value {
-    font-size: 20px;
+    font-size: 32px;
     font-weight: 700;
     color: white;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
   
   .months-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: 4px;
-    margin-top: 12px;
+    gap: 8px;
+    margin-top: 24px;
+    align-items: flex-end;
+    height: 200px;
   }
   
   .month-bar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    justify-content: flex-end;
+    gap: 12px;
+    height: 100%;
     
     .bar {
       width: 100%;
       background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%);
-      border-radius: 4px 4px 0 0;
-      min-height: 4px;
+      border-radius: 6px 6px 0 0;
+      min-height: 8px;
       transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+      
+      &:hover {
+        opacity: 0.9;
+        transform: scaleY(1.05);
+      }
     }
     
     .month-label {
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.4);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
       text-transform: lowercase;
+      font-weight: 500;
+      white-space: nowrap;
     }
   }
 `;
@@ -107,7 +125,7 @@ const AnnualRevenueCard = () => {
                 <div 
                   className="bar" 
                   style={{ 
-                    height: `${Math.max(height, 4)}px`,
+                    height: `${Math.max(height, 8)}%`,
                     opacity: monthlyRevenue[index] > 0 ? 1 : 0.3
                   }}
                 />
